@@ -1,0 +1,102 @@
+#! /usr/bin/python
+
+from common import gethome,readfile,isWindows
+import thread,random,time,sys
+
+
+class game:
+    completed=[]
+    def __init__(self):
+        filename=gethome()+"/words"
+        if isWindows():
+            filename="words"
+        self.words=readfile(filename)
+        tmp=[]
+        for w in self.words:
+            w=w.lower()
+            w=w.strip()
+            tmp.append(w)
+        self.words=tmp
+
+    def gettime(self):
+        return time.time()
+
+    #beginWith - the character with the word must begin
+    def answer(self,beginWith):
+        result=""
+        visited=[]
+        count=0
+        while True:
+            index=random.randint(0,len(self.words)-1)
+            if count==len(self.words):
+                return result
+            if index in visited:
+                continue
+            count=count+1
+            visited.append(index)
+            w=self.words[index]
+            w=w.lower()
+            w=w.strip()
+            if len(w)<4 or w.endswith("'s"):
+                continue
+            if w[0]==beginWith and w not in self.completed:
+                result=w
+                self.completed.append(result)
+                break
+        return result
+
+    def progressbar(self):
+         for i in range(30):
+             #time.sleep(1)
+            sys.stdout.write("%i\r" % (30-i))
+
+
+    def mainloop(self):
+        print "Word game\ntype (quit) to exit\nWords must be entered beginning with the last character of the previous word entered\nscore depends on more number of words per time"
+        ans=None
+        print "enter a valid english word to start with :"
+        #self.progressbar()
+        #thread.start_new_thread(self.progressbar,())
+        count=0
+        totalchars=0
+        timetaken=0
+        while True:
+            msg=">"
+            begintime=self.gettime()
+            word=raw_input(msg)
+            word=word.lower()
+            if word in "(quit)":
+                break
+            if word in self.completed:
+                print "already entered"
+                continue
+            else:
+                if ans==None or word[0]==ans[len(ans)-1]:
+                    if word not in self.words:
+                        print "word not in dictionary"
+                        continue
+                    self.completed.append(word)
+                    totalchars = totalchars + len(word)
+                    count=count+1
+                else:
+                    print "improper input,you must enter a word starting with '"+ans[len(ans)-1]+"'"
+                    continue
+            endtime=self.gettime()
+            timetaken = timetaken + (endtime-begintime)
+            ans=self.answer(word[len(word)-1])
+            if ans is "":
+                print "You win"
+                break
+            else:
+                print ans
+        print "Game over..."
+        print "number of entered words=" + str(count)
+
+
+mygame=game()
+mygame.mainloop()
+
+            
+        
+        
+    

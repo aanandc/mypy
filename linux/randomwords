@@ -1,0 +1,50 @@
+#! /usr/bin/python
+import sys,random,os
+def readfile(filename):
+    f=open(filename,'r')
+    lines = f.readlines()
+#Now we have all the lines , start processing
+    f.close()
+    return lines
+
+def writefile(filename,contents):
+	f=open(filename,'w')
+	for l in contents:
+		f.write(l)
+	f.close()
+
+def eliminate(input):
+    trim=[]
+    for i in input:
+        if len(i)<5:
+            continue
+        if "'" in i:
+            continue
+        trim.append(i)
+    return trim   
+    
+complete=[]
+ 
+def displayrand(data):
+    length=len(data)
+    error_msg = "result not found"
+    for i in range(1000):
+        val = random.randint(0,length)
+        while val in complete:
+            val = random.randint(0,length)
+        complete.append(val)
+        cmd = os.popen('define %s' % data[val])
+        word=data[val]
+        meaning = cmd.read()
+        cmd.close()
+        if error_msg not in meaning:
+            print word
+            print meaning
+        
+
+lines=readfile('words')
+trimmed = eliminate(lines)
+displayrand(trimmed)
+#writefile('output',trimmed)
+
+

@@ -1,0 +1,82 @@
+#! /usr/bin/python
+
+from common import gethome,readfile,isWindows
+import thread,random,time,sys,os
+import math
+from collections import OrderedDict
+import pickle
+
+
+def doesFileExist(filepath):
+    import os.path
+    return os.path.isfile(filepath)
+
+
+
+def mainstub():
+    stime = time.time()
+    mymethod = random.choice([rep_sub,rep_sub])
+    mis = 3
+    mis = mymethod()
+
+    rem_top = 5 # top 5 scores
+    methodname =  mymethod.__name__
+    scoredict= []
+    sfilename = sys.argv[0] + "." + methodname
+    if doesFileExist(sfilename):
+        scoredict = pickle.load(open(sfilename,"r"))
+
+    etime = time.time()
+    difftime = etime - stime
+    difftime = int(difftime)
+    score = difftime + 5*mis
+    highscore = False
+    for i in scoredict:
+        n,s = i
+        if score<s:
+            highscore = True
+    if len(scoredict)<rem_top:
+        highscore = True
+    if highscore:
+        print "You have a highscore,enter your name"
+        scoredict.append((raw_input(),score))
+    print "time taken : " + str(difftime) + " seconds"
+    print "mistakes : " + str(mis)
+    print "final score : " + str(score) + "( " + str(difftime) + " + (" + str(mis) + " * 5 ))"
+    print "high score"
+    if rem_top > len(scoredict):
+        rem_top = len(scoredict)
+    scoredict = sorted(scoredict,key = lambda t:t[1])
+    newlist = []
+    for i in range(0,rem_top):
+        val =  scoredict[i]
+        name = val[0]
+        score = val[1]
+        print name,":",score
+        newlist.append((name,score))
+    scoredict = newlist
+    pickle.dump(scoredict,open(sfilename,"w"))
+
+
+def rep_sub():    
+    sub = random.choice([8,6,7])
+    begin = random.choice([i for i in range((sub*10)-10,sub*10)])
+    mis = 0
+    print begin
+    print "Repeatedly subtract by " + str(sub)
+    print begin
+    while begin - sub > 0: 
+        try:
+            val = int(raw_input())
+        except ValueError:
+            val = 0
+        if val != (begin - sub):
+            print "wrong,guess again..."
+            print begin
+            mis = mis + 1
+        else:
+            begin = begin - sub
+    return mis
+mainstub()
+
+

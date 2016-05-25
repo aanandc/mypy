@@ -1,0 +1,15 @@
+#! /usr/bin/python
+
+
+import sys
+
+args=sys.argv
+
+
+if len(args)==2:
+    with open(args[1],"rb") as read_file:
+        contents = read_file.read()
+    print len(contents)
+    print contents[0]
+    
+

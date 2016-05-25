@@ -1,0 +1,33 @@
+#! /usr/bin/python
+
+from HTMLParser import HTMLParser
+import urllib2,urllib,os,sys
+
+# create a subclass and override the handler methods
+class MyHTMLParser(HTMLParser):
+    def handle_starttag(self, tag, attrs):
+        print "Encountered a start tag:", tag
+    def handle_endtag(self, tag):
+        print "Encountered an end tag :", tag
+
+
+opener = urllib2.build_opener()
+opener.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36')]
+url = 'http://www.google.com/search?' + urllib.urlencode({'q': ' '.join('define:'+sys.argv[1:][0])})
+infile = opener.open(url)
+s = infile.read()
+#parser = MyHTMLParser()
+#parser.feed(s)
+#print s
+# starter='<div><span class="st">'
+starter = '<span class="st" data-hveid="49">'
+ender = '</span>'
+start = s.find(starter)
+end = s[start:].find(ender)
+#output =  s[start+11:start+end]
+output =  s[start+51:start+end]
+#if len(output)>500:
+#    print "result not found"
+#else:
+print output
+

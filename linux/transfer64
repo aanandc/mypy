@@ -1,0 +1,61 @@
+#! /usr/bin/python
+
+import struct,sys
+import pickle
+import base64
+import zlib
+
+args = sys.argv
+
+mysource = 'eJydVlmTqkYYffdXEOchWk6JgqKmMqkad9xFBXFqKtVAsyg02Gzirw+LjnozczM3vGifPt92+usPnn4jSN/FpGQg0ok83Ua5nGE5NvYI18O+7D27kXtFHEM+mPC6koALmdp1dTYNKZcDWHOJFyK2Kcd/g1zOilzbxzJ8+R2OIoWX/Tm1f93QUMaSSw8OYLK0eFbgeZNnDk2N71onEZxGjam2AHMJM1UFbup6x631ZES6zALtBES1PY93tttx1KDxiT0IQrMBlpHNUpG3Mis4hIcayeOwBmjDMih6eQqkkApcO7IPNVHxR/sVua6igcAPmfZyW7c31aHMkDvYga+vr5Gh6a3d4NjQxMYGN9v9XZPiZmF0mEFAL9cqy2scM1pYan8IJsN6h6q2xkfK6XfWEa0vdU/qrugTe+am4qxFkqiydsXVfiedcO988kh6JYIFo5/arzSsr0w8EaXIckYDrmY0Kc+dVAPHEChkzSQxrHgGmqr7TlU7ifUt2z9GtrwF/Qp2BtvJdqPUOk3RHldYMpRFzqqicatprPxqnxVHNq02wuh1Z5guN1v0zNGh1/PDU9OMROBQ4cHmdWrtQ51je5voCOdS5VCLSHFbAsfOuCnYmDNt0pUGGhsYelBlodp2K4PRCq15/cQ0F8oKzMa0btSP8mTYns4EdUQHs65IjaQuRmpfb5e4iQvmAmvslL1+XA1oqcZx63aHRhrTmZjnaU3tIi/qaczI8xtUn9RPc1qjpbo8dpbBeMCzBqvW6jxWVtNqePTPvHWezKiD12/UhydJQ8EBNjlGZnsVRVTPaqcWlEiqdZiXSAeiXbURAo+Mloq3DYThvrKuj9uCGpBNDqBBsGgNlWapG21WK9zbbAfwPMKRCbgzMDuyHQC1S5ok5TLDHsOz++riSHamQzrgBN8/91vw+Gp23MUxbJ/lpc00ZkK7B7FqsLuWAjud45ApbVamdOTCWYnSaY1crzSdm3VPqiEc29pooZulBa50x8PW69HoDebjUJ01hPnUqehNFS/qbkmw6qreJMddbOKg3mN5t6FKsLXYW9vd8DylVMV9+Z14QhAqUCFsZEaEamPC0w2XyO5bLqdAlXCwgTwdmk6h+EeOiJ8UIPIeBshVIWZqhAPkA2Egx/dUw4SE7Xveyct/QfZRSs9Iyc/F7Ct+ilxHQD7LyQIGcj1fuqZkqIQJUSGZHMU/axn2I/7XC0UApBD5R4dx3kSy/1Z9v9kljwI8EI+hbEKVJaamQNlWYOFqWfyMnUywckK0HAxdt5DAj8SswAR/gDH0fIxyD6xM9NwnFCtOJI52yTuFEgkRsD5gKoPtTNz7HTrbkW3kQeS5L2/vVw3z2dmkmiQhboIgGF75sZtshpdNGygFO74qhWuI5zzOF28ZfyXhnbd/kT9V8AlDxZch4Rpn+GEQYsODnYufwl2hzzfVoZmU9UVRATDjgBr0+rHhh6Orl+IPvDSxj7Ri7POsIEpKVB7KzrDU5nbCmYaKbzmFi81zquV9IfkwkTNt+cdqPxgXHS/3ILb9O72CL8QP5xJK+eIDpZw6LFztH/dk03Zh4RI5Ue/m6S69S9DvyPhtCb8j369Il1aQtfXPavj1/v52b/9SX/9XT9/1QqL2V31gRVLkwY+rncz1IOn/C+vhXifM5HMr/VIrX6TKG/nn4NasF39l4MRqKIWL1Vvlvfg/2y4xBxiDqHBxXfxZB37ZW5fpjz6PTuRxHJ54SmEDaakOb/gdAiVZAZd4k94NBHB0f1AXb2Uc0wqJdTxBItvP3pAhiFNQCM8mkm2iXqWINP1nQrGJzCTGivdpfZRym+HZ+M/d3mLxueb+ATMspCo='
+
+def printhelp():
+    print "transfer64 pack inputfile outtxt"
+    print "transfer64 unpack outtxt outputfile"
+    print "transfer64 printmysource"
+
+def mainstub():
+    if len(args)<4:
+        if len(args)>=2 and "printmysource" in args[1]:
+            data = base64.b64decode(mysource)
+            data = zlib.decompress(data)
+            print data
+            return
+        printhelp()
+        return
+    mode = args[1]
+    filename = args[2]
+    outfilename = args[3]
+    contents=[]
+    if "unpack" in mode:
+        unpack(filename,outfilename)
+    elif "pack" in mode:
+        pack(filename,outfilename)
+
+def writeContents(filename,content):
+    out_file = open(filename,"wb")
+    out_file.write(content)
+    out_file.close()
+
+def pack(filename,outfilename):
+    val = getFileContents(filename)
+    val = zlib.compress(val)#reduce size
+    encoded = base64.b64encode(val)
+    pickle.dump(encoded,open(outfilename,"w"))
+
+def unpack(filename,outfilename):
+    newcontents = pickle.load(open(filename,"r"))
+    data = base64.b64decode(newcontents)
+    data = zlib.decompress(data)#reduce size
+    writeContents(outfilename,data)
+
+def getFileContents(filename):
+    in_file = open(filename, "rb") # opening for [r]eading as [b]inary
+    data = in_file.read() # if you only wanted to read 512 bytes, do .read(512)
+    in_file.close()
+    return data
+
+mainstub()
+
+
+

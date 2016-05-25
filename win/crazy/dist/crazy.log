@@ -1,0 +1,95 @@
+INFO:root:new game started at 2014-06-16 19:56:41.358000
+INFO:root:human cards
+INFO:root:['3H', '7C', 'QH', '2H', '5S']
+INFO:root:Computer cards
+INFO:root:['8H', '10C', 'KS', '7D', 'KD']
+INFO:root:card pile
+INFO:root:['8C', '9H', '3D', '9D', '3C', 'AH', 'QS', 'AC', '5C', '7S', '6H', '6C', '2S', 'KC', '9S', '10S', '5H', '8D', '6D', 'QC', '4S', 'JH', 'KH', '4C', '10H', '6S', '8S', '5D', '7H', 'JS', 'QD', 'AS', '2D', 'JC', '3S', '4D', '4H', '2C', '9C', '10D', 'AD', 'JD']
+INFO:root:Open card is JD
+INFO:root:Top card is now 7D
+INFO:root:completed
+INFO:root:['7D']
+INFO:root:
+Computer has 4 cards left
+INFO:root:top : 7D
+INFO:root:Created by Aanand Deepak C
+Beta version - 16/6/2014
+INFO:root:length of carddeck is 41
+INFO:root:Top card is now KD
+INFO:root:completed
+INFO:root:['7D', 'KD']
+INFO:root:
+Computer has 3 cards left
+INFO:root:top : KD
+INFO:root:length of carddeck is 40
+INFO:root:Top card is now KS
+INFO:root:completed
+INFO:root:['7D', 'KD', 'KS']
+INFO:root:
+Computer has 2 cards left
+INFO:root:top : KS
+INFO:root:
+Quit
+INFO:root:new game started at 2014-06-16 20:02:18.924000
+INFO:root:human cards
+INFO:root:['QS', '5D', 'QD', 'KH', 'JS']
+INFO:root:Computer cards
+INFO:root:['4H', 'AD', '8H', 'KD', 'JC']
+INFO:root:card pile
+INFO:root:['AS', '3S', 'KC', 'QC', '6D', 'AC', '5H', '3C', '8S', '3H', 'JH', '2C', '9C', '5C', '10S', '7C', '4C', '8D', '4S', 'JD', '7H', '7D', '2S', '2D', '2H', '6S', '8C', '9S', '6C', 'QH', '3D', 'AH', '4D', 'KS', '6H', '7S', '9H', '10C', '10D', '10H', '5S', '9D']
+INFO:root:Open card is 9D
+INFO:root:Top card is now AD
+INFO:root:completed
+INFO:root:['AD']
+INFO:root:
+Computer has 4 cards left
+INFO:root:top : AD
+INFO:root:Top card is now 5D
+INFO:root:completed
+INFO:root:['AD', '5D']
+INFO:root:Top card is now KD
+INFO:root:completed
+INFO:root:['AD', '5D', 'KD']
+INFO:root:
+Computer has 3 cards left
+INFO:root:top : KD
+INFO:root:Top card is now QD
+INFO:root:completed
+INFO:root:['AD', '5D', 'KD', 'QD']
+INFO:root:Computer plays 8H
+INFO:root:Top card is now *D
+INFO:root:completed
+INFO:root:['AD', '5D', 'KD', 'QD', '8H']
+INFO:root:
+Computer has 2 cards left
+INFO:root:top : *D
+INFO:root:length of carddeck is 41
+INFO:root:in play_computer length of carddeck is 40
+INFO:root:
+Computer has 3 cards left
+INFO:root:top : *D
+INFO:root:length of carddeck is 39
+INFO:root:in play_computer length of carddeck is 38
+INFO:root:
+Computer has 4 cards left
+INFO:root:top : *D
+INFO:root:Top card is now 10D
+INFO:root:completed
+INFO:root:['AD', '5D', 'KD', 'QD', '8H', '10D']
+INFO:root:Top card is now 10H
+INFO:root:completed
+INFO:root:['AD', '5D', 'KD', 'QD', '8H', '10D', '10H']
+INFO:root:
+Computer has 3 cards left
+INFO:root:top : 10H
+INFO:root:Top card is now KH
+INFO:root:completed
+INFO:root:['AD', '5D', 'KD', 'QD', '8H', '10D', '10H', 'KH']
+INFO:root:Top card is now 4H
+INFO:root:completed
+INFO:root:['AD', '5D', 'KD', 'QD', '8H', '10D', '10H', 'KH', '4H']
+INFO:root:
+Computer has 2 cards left
+INFO:root:top : 4H
+INFO:root:
+Quit

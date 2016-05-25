@@ -1,0 +1,97 @@
+#!/usr/bin/python
+
+from datetime import date,datetime,timedelta
+import calendar
+import sys
+
+import time
+
+LOGD = False
+
+
+def printlog(string):
+    if LOGD:
+        print string
+
+def isWeekEnd(day,month,year):
+    return True
+
+def isSunday(year,month,day):
+    if(calendar.weekday(year,month,day)) == 6:
+        return True
+    else:
+        return False
+
+def isSaturday(year,month,day):
+    if(calendar.weekday(year,month,day)) == 5:
+        return True
+    else:
+        return False
+
+
+def find_working_days(beginyear,beginmonth,beginday,endyear,endmonth,endday):
+    date1=datetime(beginyear,beginmonth,beginday)
+    date2 = datetime(endyear,endmonth,endday)
+    num = 0
+    weekends = 0
+    dayDelta = timedelta(days=1)
+    while date1 != date2:
+        if date1.weekday() not in [5,6]:
+            num = num + 1
+        else:
+            weekends = weekends + 1
+        date1 = date1 + dayDelta
+    return [num,weekends]
+
+def mainstub():
+    cmdargs = sys.argv
+    total = len(sys.argv)
+    val = None
+    if total == 2:
+        val = cmdargs[1]
+        printlog(val)
+        if val == "--help":
+            print "salary - with no arguments to find the number of days from today to salary day"
+            print "salary dd:mm:yyyy - to "
+            return
+        # need to validate it first
+        d,m,y = val.split(":")
+    if val == None:
+        # if no argument from command line get todays date
+        d,m,y = time.strftime("%d:%m:%y").split(":")
+    d = int(d)
+    m = int(m)
+    y = int(y)
+    td = tm = ty = 0
+    ty = y
+    td = 25
+    tm = m
+    if d > 25:
+        if tm == 12:
+            tm = 1
+            ty = ty + 1
+        else:
+            tm = tm + 1
+    if(isSunday(ty,tm,td)):
+        td = td - 2
+    if(isSaturday(ty,tm,td)):
+        printlog(str(ty)+ "/" + str(tm)+ "/" + str(td) + " saturday")
+        td = td - 1
+    tdate = date(ty,tm,td)
+    cdate = date(y,m,d)
+    delta = tdate - cdate
+    print "Next salary date is " + str(td)+"/"+str(tm)+"/"+str(ty) + "(" + calendar.day_name[calendar.weekday(ty,tm,td)] + ")"
+    print "excluding today,without including company holidays,"
+    print str(delta.days) + " days left for salary"
+    wdays = find_working_days(y,m,d,ty,tm,td)
+    print str(wdays[0]) + " working days left"
+    print str(wdays[1]) + " holidays left"
+
+mainstub()
+        
+
+    
+
+
+
+

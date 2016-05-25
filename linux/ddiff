@@ -1,0 +1,43 @@
+#!/usr/bin/python
+
+from datetime import date,datetime,timedelta
+import calendar
+import sys
+
+import time
+
+LOGD = False
+
+
+def mainstub():
+    cmdargs = sys.argv
+    total = len(sys.argv)
+    val = None
+    if total < 3 or total == 1 or  cmdargs[1] == "--help":
+        print "ddiff dd:mm:yyyy(from) dd:mm:yyyy(to) "
+        return
+        # need to validate it first
+    d1,m1,y1 = cmdargs[1].split(":")
+    d2,m2,y2 = cmdargs[2].split(":")
+    #if val == None:
+        # if no argument from command line get todays date
+    #    d,m,y = time.strftime("%d:%m:%y").split(":")
+    d1 = int(d1)
+    m1 = int(m1)
+    y1 = int(y1)
+    d2 = int(d2)
+    m2 = int(m2)
+    y2 = int(y2)
+    sdate = date(y1,m1,d1)
+    edate = date(y2,m2,d2)
+    delta = edate - sdate
+    print str(delta.days) + " days"
+
+mainstub()
+        
+
+    
+
+
+
+

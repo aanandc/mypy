@@ -1,0 +1,90 @@
+#! /usr/bin/python
+
+import sys
+import itertools
+
+def findCombos(str):
+    res=[]
+    val = str
+    if(len(val)==1):
+        res.append(val)
+        return res
+    for j in range(len(val)):
+        for v in range(len(val)):
+            val = replacechars(val,j,v)
+            val2 = replacechars(str,j,v)
+            for i in range(len(val)):
+                val = rotateright(val)
+                val2 = rotateright(val2)
+                if val not in res:
+                    res.append(val)
+                if val2 not in res:
+                    res.append(val2)
+                for x in range(len(val)):
+                    for y in range(len(val)):
+                        val3=replacechars(val,x,y)
+                        if val3 not in res:
+                            res.append(val3)
+                        val4=replacechars(val2,x,y)
+                        if val4 not in res:
+                            res.append(val4)
+    return res
+
+def findCombos2(str):
+    res=list(itertools.permutations(str,len(str)))
+    ans=parse(res)
+    return ans
+
+def parse(val):
+    res=[]
+    for v in val:
+        tmp=""
+        for i in v:
+            tmp = tmp + i
+        res.append(tmp)
+    return res
+
+
+
+def rotateright(str):
+    return str[1:len(str)] + str[0]
+
+def rotateleft(str):
+    return str[len(str)-1] + str[0:len(str)-1] 
+
+
+def replacechars(str,srcpos,targetpos):
+    tmp = str[srcpos]
+    str = str[0:srcpos] + str[targetpos] + str[srcpos+1:len(str)]
+    str = str[0:targetpos] + tmp + str[targetpos+1:len(str)]
+    return str
+    
+
+
+def stub():
+    args = sys.argv
+    supressOutput=False
+    if len(args)>1:
+        name = args[1]
+        if len(args)>2 and args[2] in "--supress":
+            supressOutput=True
+    else:
+        name = raw_input("Enter a phrase : ")
+    val = findCombos2(name)
+    #val.sort()
+    #for v in val:
+        #print v
+    if not supressOutput:
+        print "number of items"
+        print len(val)
+        print val
+    else:
+        for v in val:
+            print v
+
+
+stub()
+
+
+
+
