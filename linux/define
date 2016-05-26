@@ -19,7 +19,7 @@ s = infile.read()
 soup = BeautifulSoup(s, 'html.parser')
 
 for i in soup.find_all('span',class_='st'):
-    print i.get_text()
+    print i.get_text().encode('utf-8').strip()
     #Just print the first definition, so break
     break
 #print soup.get_text()
