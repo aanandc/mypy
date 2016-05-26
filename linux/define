@@ -1,8 +1,8 @@
 #! /usr/bin/python
 
 from HTMLParser import HTMLParser
-import urllib2,urllib,os,sys
-
+import urllib2,urllib,os,sys,bs4
+from bs4 import BeautifulSoup
 # create a subclass and override the handler methods
 class MyHTMLParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
@@ -16,18 +16,26 @@ opener.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/53
 url = 'http://www.google.com/search?' + urllib.urlencode({'q': ' '.join('define:'+sys.argv[1:][0])})
 infile = opener.open(url)
 s = infile.read()
+soup = BeautifulSoup(s, 'html.parser')
+
+for i in soup.find_all('span',class_='st'):
+    print i.get_text()
+    #Just print the first definition, so break
+    break
+#print soup.get_text()
+
 #parser = MyHTMLParser()
 #parser.feed(s)
 #print s
 # starter='<div><span class="st">'
-starter = '<span class="st" data-hveid="49">'
-ender = '</span>'
-start = s.find(starter)
-end = s[start:].find(ender)
+#starter = '<span class="st" data-hveid="49">'
+#ender = '</span>'
+#start = s.find(starter)
+#end = s[start:].find(ender)
 #output =  s[start+11:start+end]
-output =  s[start+51:start+end]
+#output =  s[start+51:start+end]
 #if len(output)>500:
 #    print "result not found"
 #else:
-print output
+#print output
 
